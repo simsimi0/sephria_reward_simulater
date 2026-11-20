@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>세피리아 · Star's 모드 보상 예측기 v6</title>
+<style>
+:root{--bg:#0b0d14;--surface:#141824;--surface2:#1b2130;--edge:#303749;--ink:#f2f3fb;--soft:#a6afc3;--blue:#96b6ff;--lime:#b4f2c0;--amber:#fed59a;--red:#ff9cab;--white:#eeeef5;--purple:#c8a8fa}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 87% -5%,#30263f 0,transparent 480px),radial-gradient(circle at 0 10%,#19313b 0,transparent 420px),var(--bg);color:var(--ink);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.33;cursor:not-allowed}.wrap{max-width:1490px;margin:auto;padding:30px 26px 100px}.eyebrow{font-size:11px;font-weight:900;letter-spacing:.14em;color:var(--lime)}h1{font-size:clamp(25px,3vw,39px);letter-spacing:-.04em;margin:8px 0 6px;font-weight:850}h2{font-size:18px;letter-spacing:-.03em;margin:0}h3{font-size:14px;margin:15px 0 9px}.intro{color:var(--soft);max-width:900px;margin:0 0 22px}.notice{margin-bottom:20px;border:1px solid #62533e;background:#2a231b;padding:12px 15px;border-radius:12px;color:#ffdfaa;font-size:12px}.layout{display:grid;grid-template-columns:minmax(370px,510px) minmax(400px,1fr);gap:18px;align-items:start}.pane{background:linear-gradient(150deg,#1a1e2e,#121822);border:1px solid var(--edge);border-radius:19px;padding:19px;margin-bottom:17px;box-shadow:0 8px 30px #00000015}.panehead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.hint,.caption{color:var(--soft);font-size:12px;margin:6px 0 10px}.countTag,.tag{border-radius:20px;border:1px solid #52636d;color:var(--lime);padding:3px 10px;font-weight:750;font-size:12px;white-space:nowrap}.inline,.row{display:flex;gap:9px;align-items:center}.row{flex-wrap:wrap}.control{display:flex;flex-direction:column;gap:5px;flex:1;min-width:140px}.control>label,.slabel{color:var(--soft);font-weight:750;font-size:12px}select,input[type=number],input[type=text]{background:#0b111e;color:var(--ink);border:1px solid #3b4559;border-radius:9px;min-height:39px;padding:7px 10px;min-width:0;width:100%}select:focus,input:focus{outline:2px solid #8caaff7a;outline-offset:1px}input[type=checkbox]{accent-color:var(--lime);width:17px;height:17px;vertical-align:middle}button{background:#2c3548;border:1px solid #4e5a72;border-radius:10px;color:var(--ink);font-weight:700;min-height:37px;padding:7px 12px;transition:background .15s}button:hover:not(:disabled){background:#414f65}.buttonprimary{background:linear-gradient(100deg,#b4f2c0,#8fe0d8);border:0;color:#09251d}.buttonprimary:hover:not(:disabled){background:#cefbd6}.danger{border-color:#704754;color:#ffb7c2}.space{display:flex;justify-content:space-between;align-items:center;gap:10px}.slots{display:flex;flex-direction:column;gap:8px}.fruitrow{display:grid;grid-template-columns:22px minmax(95px,1fr) 76px 104px 34px;align-items:center;gap:7px;padding:7px;background:#121b29;border:1px solid #2b374b;border-radius:11px}.fruitrow .index{font-size:12px;color:var(--soft);text-align:center}.fruitrow select{min-height:35px;padding:6px}.stepper{display:flex;align-items:center;justify-content:center;gap:3px}.stepper button{padding:0;width:30px;min-height:33px}.stepper output{font-weight:900;min-width:22px;text-align:center;color:var(--lime)}.rem{min-height:33px;padding:0;color:var(--red)}.actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px}.checkline{display:flex;gap:8px;align-items:center;cursor:pointer;color:var(--ink);font-size:13px}.startrow{display:grid;grid-template-columns:minmax(0,1fr) 34px;gap:7px;margin-top:7px}.startrow select{width:100%}.weaponGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:9px 0 4px}.weap{padding:9px 5px;min-height:50px;text-align:center;background:#141b2a;border-color:#384557;border-radius:11px;color:#bdc6d6}.weap.active{background:#283d41;color:#cdf7d9;border-color:#7cc5a0;box-shadow:inset 0 0 0 1px #7cc5a036}.weap b{display:block;font-size:13px}.weap small{font-size:10px;color:inherit;opacity:.75}.rule{border:0;border-top:1px solid #364052;margin:14px 0}.fieldpair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.muted{color:var(--soft)}details{border-top:1px solid #334056;margin-top:13px;padding-top:12px}summary{cursor:pointer;font-weight:800;color:#c8d5ec}.mini{font-size:11px}.settingsGrid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}.settingsGrid .control{min-width:0}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.metric{padding:12px 10px;background:#101929;border:1px solid #334053;border-radius:12px}.metric strong{display:block;font-size:22px;line-height:1.25;color:var(--lime)}.metric span{display:block;font-size:11px;color:var(--soft);margin-top:3px}.rarbadge{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:3px 7px;border:1px solid #5c6477;border-radius:7px;font-weight:750}.rarbadge.common{color:var(--white);border-color:#747785}.rarbadge.advanced{color:var(--blue);border-color:#4b629b}.rarbadge.rare{color:var(--amber);border-color:#947a46}.rarbadge.legend{color:var(--red);border-color:#885364}.substats{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.statpill{background:#192536;border:1px solid #3a4c5d;border-radius:8px;padding:5px 8px;color:#c3d2e8;font-size:11px}.cols2{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.chart{max-height:510px;overflow:auto;scrollbar-color:#5b6679 transparent;padding-right:4px}.chartrow{display:grid;grid-template-columns:95px minmax(30px,1fr) 72px;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid #293448}.chartrow:last-child{border:0}.chartrow label{font-size:12px;color:#d6deed}.track{height:11px;background:#283345;border-radius:999px;overflow:hidden}.bar{background:linear-gradient(90deg,#609f96,#b0e9bf);height:100%;border-radius:999px;transition:width .16s}.pct{text-align:right;font-variant-numeric:tabular-nums;font-size:12px;color:#c0f1d1}.samples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.sample{min-height:111px;padding:13px;border:1px solid #46536c;background:#111e30;border-radius:12px}.sample .name{font-size:13px;font-weight:800;line-height:1.5;margin:5px 0;word-break:keep-all}.sample .tiny{font-size:11px;color:var(--soft)}.sample .index{font-size:10px;color:#a4b0c4}.sample.bond{border-color:#87618f;background:#211a2b}.empty{padding:16px;font-size:12px;color:var(--soft);background:#111b2a;border-radius:10px}.tablewrap{overflow:auto;max-height:400px;border:1px solid #333f55;border-radius:11px}.datatable{border-collapse:collapse;width:100%;font-size:12px;white-space:nowrap}.datatable th,.datatable td{padding:9px 11px;text-align:left;border-bottom:1px solid #2b3547}.datatable th{position:sticky;top:0;background:#1c2635;color:#bcd0e3;font-size:11px;z-index:2}.datatable td.num,.datatable th.num{text-align:right;font-variant-numeric:tabular-nums}.datatable tr:last-child td{border-bottom:0}.datatable tr:hover td{background:#202d3d}.textinput{max-width:220px}.simMsg{font-size:12px;color:var(--soft);padding:9px 0 0;min-height:26px}.warn{color:var(--amber)}.grow{flex:1}.textok{color:var(--lime)}.footer{margin-top:20px;padding:14px 4px;color:#8996b0;font-size:11px}.footer a{color:#adcaff}.sectiontop{margin:0 0 10px}.inlineLabel{display:inline-flex;align-items:center;gap:8px;cursor:pointer}.extraGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.typeTable{margin-top:8px}.progressbar{background:#253243;border-radius:12px;height:9px;overflow:hidden;display:flex;margin-top:10px}.progressbar>div{height:100%}.indicator{font-weight:700;font-size:12px;color:var(--lime);margin:6px 0}.pilllink{display:inline-block;color:#d0dcef;text-decoration:none;border-bottom:1px dotted #8296b2}button:focus-visible{outline:2px solid var(--lime)}@media(max-width:1120px){.layout{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(4,1fr)}}@media(max-width:700px){.wrap{padding:17px 11px 70px}.pane{padding:14px}.weaponGrid{grid-template-columns:repeat(2,1fr)}.metrics{grid-template-columns:1fr 1fr}.cols2{grid-template-columns:1fr}.fruitrow{grid-template-columns:16px minmax(60px,1fr) 70px 98px 30px;gap:5px;padding:6px}.fruitrow .index{font-size:10px}.fruitrow select{font-size:12px;padding:4px 3px}.stepper button{width:26px}.stepper{gap:0}.samples{grid-template-columns:1fr 1fr}.settingsGrid{grid-template-columns:1fr 1fr}}@media(max-width:390px){.fruitrow{grid-template-columns:0 minmax(60px,1fr) 62px 84px 24px}.fruitrow .index{display:none}.stepper button{width:24px}.sample{padding:9px}}
+
+.modeGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0}.modeButton{min-height:61px;background:#151d2e;text-align:center}.modeButton.active{background:#28423f;color:#c4f5d8;border-color:#7cc5a0;box-shadow:inset 0 0 0 1px #7cc5a036}.modeButton small{display:block;font-size:11px;opacity:.75}.luckline{display:grid;grid-template-columns:1fr 100px;align-items:center;gap:12px;margin:9px 0 12px}.probabilityRows{display:grid;gap:8px}.probRow{display:grid;grid-template-columns:72px minmax(0,1fr) minmax(0,1fr);gap:9px;align-items:end}.probRow .control{min-width:0}.probRow .control>label{font-size:11px}.probRow input{min-height:35px;padding:6px}.probSummary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:12px 0}.probTile{border:1px solid #364459;background:#101929;border-radius:10px;padding:9px 5px;text-align:center}.probTile b{display:block;font-size:16px;line-height:1.35}.probTile small{display:block;font-size:10px;color:var(--soft)}.probBadge{font-size:12px;min-height:23px;margin:7px 0 0}.sourcefoot{font-size:11px;color:var(--soft);margin-top:8px}.probSource{color:var(--amber)}@media(max-width:430px){.probRow{grid-template-columns:65px minmax(0,1fr) minmax(0,1fr);gap:5px}.modeGrid{gap:4px}.modeButton{padding:7px 3px}.probSummary{gap:3px}.probTile{padding:8px 2px}.probTile b{font-size:13px}}
+.luckUserInput{margin:16px 0 12px;padding:15px;border:2px solid #83c5a5;border-radius:14px;background:linear-gradient(135deg,#18362c,#132439);display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:9px 18px;align-items:center}.luckUserInput label span{display:block;font-size:17px;font-weight:900;color:#c4f5d8}.luckUserInput label small{font-size:11px;color:#c6d6d5;display:block;margin-top:4px}.luckUserInput input{font-size:21px;font-weight:850;text-align:center;height:56px;border:2px solid #83c5a5;background:#0c1923}.luckInstruction{grid-column:1/-1;font-size:11px;color:#b8d1c7}.probSummary{margin-top:15px}@media(max-width:510px){.luckUserInput{grid-template-columns:1fr}.luckUserInput input{width:100%;text-align:left}}
+</style></head>
+<body><div class="wrap">
+<div class="eyebrow">SEPHIRIA / STAR'S MOD · REWARD LAB v6</div>
+<h1>아티팩트 보상 예측기 <span style="font-size:14px;color:var(--lime)">보상 유형별 확률 · 내 행운 직접 입력</span></h1>
+<p class="intro">과일꼬치 6칸, 시작 아티팩트의 시너지, 무기별 등장 제한, 희귀도별 아티팩트 개수와 결속 2중 시너지를 함께 반영합니다. 일반·미니보스·보스 보상을 선택하고, <b>현재 내 행운 스탯을 직접 입력</b>하면 등급별 확률과 보상 후보가 자동 계산됩니다.</p>
+<div class="notice"><b>모형의 한계</b> — 이 결과는 실제 게임 드롭 확률이 아닙니다. 아티팩트 수량은 사용자 제공 데이터이고 보상 종류별 확률식은 비공식 커뮤니티 분석입니다. 희귀도 확률 기준값은 사용자가 제공한 보상별 표 이미지(행운 −50·0·100)를 그대로 전사했습니다. 이것은 <b>비공식 커뮤니티 분석</b>이며 실제 게임 내부 계산과 Star's 모드의 일치 여부는 확인되지 않았습니다. 결속·당근의 세부 보정은 모형 가정입니다. 아이템 이름을 제공받지 않았으므로 개별 아이템은 <b>임시 번호</b>로 표시합니다.</div>
+<div class="layout"><div class="left">
+<section class="pane" id="weaponPanel"><div class="panehead"><h2>01. 시작 무기</h2><span class="tag">6종</span></div><p class="hint">해당 무기에서만 등장하는 아티팩트를 자동으로 걸러냅니다.</p><div id="weaponButtons" class="weaponGrid"></div><p class="caption" id="weaponImpact"></p></section>
+<section class="pane"><div class="panehead"><h2>02. 과일꼬치</h2><span class="countTag" id="slotCount">0 / 6칸</span></div><p class="hint">시너지마다 일반 과일 최대 <b>+3개</b>, 얼린 과일 최대 <b>−2개</b>. 슬롯 오른쪽에서 수량을 조절하세요.</p><div id="fruitRows" class="slots"></div><p class="warn mini" id="fruitError" aria-live="polite"></p><div class="actions"><button id="addFruit" type="button">+ 과일 등록</button><button id="clearFruit" class="danger" type="button">모두 비우기</button></div><hr class="rule"><label class="checkline"><input type="checkbox" id="carrot"> <b>당근 추가</b> (꼬치 1칸 사용)</label><p class="caption">당근은 보유 시너지 1개당 +25%p, 최대 +75%p로 모델링합니다. 얼린 과일을 선택한 시너지에는 당근 효과가 적용되지 않습니다.</p></section>
+<section class="pane"><div class="panehead"><h2>03. 시작 아티팩트</h2><span class="tag" id="startCount">0 / 2개</span></div><p class="hint">아티팩트 이름이 아직 없으므로 시너지로 대신 입력합니다. 하나당 해당 시너지 <b>+1</b>, 결속 선택 시 양쪽 시너지 각각 +1로 가정합니다.</p><div id="startRows"></div><div class="actions"><button id="addStart" type="button">+ 시작 아이템</button><button id="clearStart" class="danger" type="button">모두 비우기</button></div><details><summary>현재 보유 중인 시너지 추가 입력</summary><p class="caption">시작 아이템 외 이미 획득한 아티팩트가 있다면 그 시너지 개수를 추가하세요. 당근 보정 및 결속 등장 조건에 반영됩니다.</p><div id="extraSynergy" class="extraGrid"></div><button id="resetExtra" type="button" style="margin-top:10px">추가 수량 초기화</button></details></section>
+<section class="pane" id="rewardPanel"><div class="panehead"><h2>04. 보상 종류와 행운</h2><span class="tag" id="rewardModeTag">보스</span></div>
+<p class="hint">일반·석판 / 미니보스 / 보스의 확률표는 별개야. 아래 칸에 네 실제 행운 스탯을 입력하면 선택한 보상 종류에 맞춰 계산돼.</p>
+<div id="rewardModeButtons" class="modeGrid">
+<button type="button" class="modeButton" data-mode="normal">일반·석판 보상<small>일반 전투 / 석판</small></button>
+<button type="button" class="modeButton" data-mode="mini">미니보스 보상<small>대형 보상(BIG)</small></button>
+<button type="button" class="modeButton" data-mode="boss">보스 보상<small>챕터 보스</small></button></div>
+<div class="luckUserInput"><label for="luck"><span>내 행운 스탯 직접 입력</span><small>게임 화면에 표시된 행운을 입력하세요. 초기값은 비워져 있습니다.</small></label><input type="number" id="luck" min="-999" max="999" step="any" inputmode="decimal" placeholder="행운 입력" autocomplete="off" aria-label="사용자 행운 수치 직접 입력"><div class="luckInstruction">예: 행운 25면 <b>25</b> 입력 · 기준값 행운 −50 / 0 / 100 · 범위를 벗어나면 끝값 적용</div></div>
+<div class="probSummary" id="probSummary"></div><div id="probSource" class="probBadge" aria-live="polite"></div>
+<details><summary>보상 종류별 원본 확률표 보기 (기준 데이터)</summary><p class="caption">아래 확률은 사용자가 제공한 이미지의 값입니다. <b>이 표는 수정할 필요가 없고, 위의 행운 입력칸만 직접 입력하면 됩니다.</b></p><div id="rewardProfileInputs" class="tablewrap"></div></details>
+<p class="sourcefoot">계산: 행운 −50→0 구간 및 0→100 구간은 각각 선형 보간. 일반(흰색) 확률 = 100% − (고급 + 희귀 + 전설). <a class="pilllink" href="https://gall.dcinside.com/mgallery/board/view/?id=sephiria&no=35751" target="_blank" rel="noopener">비공식 커뮤니티 분석 원문</a> · 사용자 제공 이미지 수치 사용</p>
+</section>
+<section class="pane"><div class="panehead"><h2>05. 계산 설정</h2><span class="tag">실험 모델</span></div><div class="fieldpair"><div class="control"><label for="rarity">보상 희귀도</label><select id="rarity"><option value="all">전체 희귀도 (보상표 적용)</option><option value="common">일반 · 흰색</option><option value="advanced">고급 · 파랑</option><option value="rare">희귀 · 노랑</option><option value="legend">전설 · 빨강</option></select></div><div class="control"><label for="choices">한 보상의 선택지 수</label><input type="number" id="choices" min="1" max="8" value="3"></div></div><div style="margin-top:12px" class="row"><label class="inlineLabel"><input type="checkbox" id="includeBonds" checked> 결속 아티팩트 포함</label></div><div class="control" style="margin-top:10px"><label for="bondRule">결속 후보 진입 조건</label><select id="bondRule"><option value="one">양쪽 중 하나 시너지 +1 이상</option><option value="both">두 시너지 모두 +1 이상</option><option value="all">조건 없이 포함 (비교용)</option></select></div><p class="caption">0.10.9 이후 일반 규칙은 양쪽 중 하나가 활성화되면 후보에 추가됩니다. Star's 모드의 별도 규칙은 확인되지 않았습니다.</p><details><summary>고급 설정 · 아이템 가중치 조정</summary><p class="caption">아래 값은 희귀도 확률을 바꾸지 않고 <b>같은 희귀도 안에서 아이템에 적용할 추가 가중치</b>입니다. 기본값 1:1:1:1은 동일 등급 내 균등 조건입니다.</p><div class="settingsGrid" id="rarityWeights"></div><div class="control" style="margin-top:11px"><label for="bondFormula">결속 아티팩트의 두 시너지 보정 결합</label><select id="bondFormula"><option value="average">평균 (기본 가정)</option><option value="sum">합산 (대안 가정)</option><option value="max">둘 중 높은 값 (대안 가정)</option></select></div><p class="caption">결속은 양쪽 시너지의 영향을 받지만 정확한 병합식은 확인되지 않았습니다. 결속 고유 보정 +25%p(당근 적용 시 +50%p)는 별도로 더하는 가정입니다.</p></details><div class="actions"><button class="buttonprimary grow" id="recompute" type="button">현재 설정으로 계산</button><button id="resetAll" type="button" class="danger">전체 초기화</button></div><div class="actions"><button id="save" type="button">설정 저장</button><button id="load" type="button">설정 불러오기</button><button id="exportSettings" type="button">설정 JSON 내보내기</button><input id="importSettingsInput" type="file" accept=".json,application/json" hidden><button id="importSettings" type="button">설정 JSON 가져오기</button></div><p class="caption" id="status" aria-live="polite"></p></section>
+</div><div class="right">
+<section class="pane"><div class="panehead"><h2>보상 후보 분석</h2><span class="tag" id="modelTag">계산 모델</span></div><div class="metrics"><div class="metric"><strong id="candidateCount">—</strong><span>현재 후보 아티팩트</span></div><div class="metric"><strong id="bondCount">—</strong><span>결속 후보</span></div><div class="metric"><strong id="mostCombo">—</strong><span>1위 시너지</span></div><div class="metric"><strong id="strongestShare">—</strong><span>1위 시너지 포함 비중</span></div></div><div id="raritySummary" class="substats"></div><p id="summaryMsg" class="caption"></p></section>
+<section class="pane"><div class="panehead"><h2>시너지별 보상 비중</h2><span class="tag">26종</span></div><p class="hint">각 시너지와 연결된 후보의 가중치 합계 ÷ 전체 가중치. 결속은 <b>양쪽 시너지에 모두 포함</b>되므로 시너지 비중 합계가 100%를 초과할 수 있습니다.</p><div id="synergyChart" class="chart"></div></section>
+<section class="pane"><div class="panehead"><h2>가상 보상 선택지</h2><span class="tag" id="sampleKind">예시</span></div><div id="sampleCards" class="samples"></div><div class="actions"><button id="drawSample" class="buttonprimary" type="button">보상 다시 뽑기</button><label for="runs" class="slabel">반복 횟수</label><select id="runs" style="width:128px"><option value="1000">1,000회</option><option value="5000" selected>5,000회</option><option value="20000">20,000회</option></select><button id="runMonteCarlo" type="button">반복 추첨</button></div><div class="simMsg" id="simStatus" aria-live="polite">가상 결과는 현재 데이터 및 선택한 계산식에 따라 달라집니다.</div></section>
+<section class="pane"><div class="panehead"><h2>상위 보상 후보</h2><span class="tag" id="rankingTag">1회 추첨 기준</span></div><p class="hint" id="rankingHint">희귀도 먼저 추첨 → 해당 등급 내 아이템 가중치에 따라 추첨. 게임 결과를 보장하지 않습니다.</p><div class="tablewrap"><table class="datatable"><thead><tr><th>아티팩트 임시명</th><th>시너지</th><th>희귀도</th><th class="num" id="rankHeader">모델상 비중</th></tr></thead><tbody id="rankingRows"></tbody></table></div></section>
+<section class="pane"><div class="panehead"><h2>등록된 데이터</h2><span class="tag" id="dataSizeTag">데이터 검증</span></div><p class="hint">왼쪽의 무기를 바꾸면 전용 아티팩트를 제외한 <b>실제 계산 후보 수</b>가 바뀝니다. 다음 표의 기본 수량은 무기 제한을 적용하기 <b>전</b>입니다.</p><div class="tablewrap"><table class="datatable typeTable"><thead><tr><th>시너지</th><th class="num">흰색</th><th class="num">파랑</th><th class="num">노랑</th><th class="num">빨강</th><th class="num">별도 결속</th></tr></thead><tbody id="dataRows"></tbody></table></div><div class="actions"><button id="downloadCSV" type="button">후보 318종 CSV 다운로드</button></div><p class="caption">결속 목록에 적힌 ×2 두 항목은 서로 다른 아티팩트 두 개로 계산합니다. 단일 시너지 희귀도 개수와 결속 희귀도는 별도 집계합니다.</p></section>
+</div></div>
+<div class="footer">데이터: 사용자가 제공한 26개 시너지별 수량·40개 결속 관계(총 42개). 참고 자료: <a href="https://gall.dcinside.com/mgallery/board/view/?id=sephiria&amp;no=35751" target="_blank" rel="noopener noreferrer">희귀도·행운 분석</a> · <a href="https://gameupdatenotifier.com/g/sephiria/v/0-10-8" target="_blank" rel="noopener noreferrer">세피리아 0.10.8 패치 기록</a> · <a href="https://www.sephiria.tools/updates" target="_blank" rel="noopener noreferrer">0.10.9 결속 후보 규칙</a> · <a href="https://roguebase.gg/sephiria/weapons" target="_blank" rel="noopener noreferrer">무기 유형</a> · <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3829559495" target="_blank" rel="noopener noreferrer">Star's SephiriaMod</a>.<br>단독 실행 가능한 오프라인 HTML. 별도 서버, 외부 라이브러리, 회원가입 불필요. 브라우저에 저장한 설정은 해당 브라우저에만 남습니다.</div>
+</div>
+<script>
+'use strict';
+const SYNERGIES=[{"name":"견고","c":[2,7,2,2]},{"name":"그림자","c":[2,4,2,2]},{"name":"빙하","c":[4,4,5,2]},{"name":"호수","c":[2,5,6,2]},{"name":"바람노래","c":[1,4,3,2]},{"name":"대장간","c":[3,3,7,2]},{"name":"혜성","c":[2,2,1,1]},{"name":"마법공학","c":[3,5,3,2]},{"name":"얼음 무구","c":[1,4,1,2]},{"name":"행성","c":[1,4,2,2]},{"name":"정밀","c":[4,4,4,3]},{"name":"동료","c":[1,8,2,2]},{"name":"잉걸불","c":[2,9,3,2]},{"name":"원소","c":[1,4,2,0]},{"name":"수호","c":[2,4,3,2]},{"name":"먹구름","c":[3,6,1,2]},{"name":"교섭","c":[1,2,1,1]},{"name":"저주","c":[1,2,2,1]},{"name":"운명","c":[2,2,0,1]},{"name":"신비","c":[1,3,1,2]},{"name":"허리케인","c":[3,6,4,2]},{"name":"파티","c":[2,2,2,1]},{"name":"아카데미","c":[1,6,7,2]},{"name":"연금술","c":[1,1,2,1]},{"name":"태양검","c":[2,5,3,2]},{"name":"바람의 칼날","c":[2,3,3,2]}];
+const BONDS=[{"a":"저주","b":"바람노래","n":1},{"a":"혜성","b":"그림자","n":1},{"a":"수호","b":"아카데미","n":1},{"a":"견고","b":"아카데미","n":1},{"a":"잉걸불","b":"빙하","n":2},{"a":"잉걸불","b":"먹구름","n":1},{"a":"먹구름","b":"빙하","n":1},{"a":"먹구름","b":"바람노래","n":1},{"a":"수호","b":"바람노래","n":1},{"a":"얼음 무구","b":"호수","n":1},{"a":"동료","b":"정밀","n":1},{"a":"정밀","b":"그림자","n":1},{"a":"행성","b":"바람노래","n":1},{"a":"태양검","b":"얼음 무구","n":1},{"a":"먹구름","b":"동료","n":1},{"a":"빙하","b":"그림자","n":1},{"a":"견고","b":"그림자","n":2},{"a":"그림자","b":"아카데미","n":1},{"a":"호수","b":"아카데미","n":1},{"a":"빙하","b":"바람노래","n":1},{"a":"잉걸불","b":"마법공학","n":1},{"a":"행성","b":"잉걸불","n":1},{"a":"호수","b":"정밀","n":1},{"a":"얼음 무구","b":"마법공학","n":1},{"a":"태양검","b":"아카데미","n":1},{"a":"잉걸불","b":"태양검","n":1},{"a":"운명","b":"교섭","n":1},{"a":"수호","b":"그림자","n":1},{"a":"빙하","b":"얼음 무구","n":1},{"a":"정밀","b":"신비","n":1},{"a":"마법공학","b":"먹구름","n":1},{"a":"태양검","b":"먹구름","n":1},{"a":"얼음 무구","b":"먹구름","n":1},{"a":"운명","b":"정밀","n":1},{"a":"행성","b":"호수","n":1},{"a":"혜성","b":"수호","n":1},{"a":"마법공학","b":"빙하","n":1},{"a":"교섭","b":"연금술","n":1},{"a":"동료","b":"그림자","n":1},{"a":"허리케인","b":"바람노래","n":1}];
+const WPN=[['sword','검과 방패'],['great','대검'],['dagger','단검'],['crossbow','석궁'],['blade','도'],['staff','봉']];
+const RARITIES=[['common','일반','흰색'],['advanced','고급','파랑'],['rare','희귀','노랑'],['legend','전설','빨강']];
+const $=id=>document.getElementById(id);
+const STATE_KEY='sephiria_stars_ko_v6_config';
+let state={rewardType:'normal',luck:null,weapon:'sword',fruits:[],carrot:false,starts:[],extras:{},rarity:'all',choices:3,includeBonds:true,bondRule:'one',bondFormula:'average',rarityWeights:{common:1,advanced:1,rare:1,legend:1},runs:5000};
+let current=[],scored=[],synergyShares=[],simHits=null;
+function moneyNum(x){return Number.isFinite(+x)?Number(x).toLocaleString('ko-KR'):'—'}
+function pct(x,d=2){return Number.isFinite(x)?x.toFixed(d)+'%':'—'}
+function sum(arr){return arr.reduce((v,n)=>v+n,0)}
+function clamp(x,lo,hi){return Math.min(hi,Math.max(lo,Number(x)||0))}
+function xss(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function seedPool(){let items=[];for(let sn of SYNERGIES){for(let ri=0;ri<4;ri++)for(let idx=0;idx<sn.c[ri];idx++){let weapon=null;
+ if(sn.name==='견고'&&ri===1){if(idx<2)weapon='sword';else if(idx===2)weapon='blade';else if(idx===3)weapon='staff'}
+ if(sn.name==='대장간'&&ri===2&&idx<6)weapon=WPN[idx][0];
+ const rare=RARITIES[ri][0];items.push({id:`single_${SYNERGIES.indexOf(sn)}_${ri}_${idx}`,name:`${sn.name} · ${RARITIES[ri][1]} 아티팩트 ${idx+1}`,combos:[sn.name],rarity:rare,weapon,bond:false});}}
+ for(let pi=0;pi<BONDS.length;pi++)for(let idx=0;idx<BONDS[pi].n;idx++){let b=BONDS[pi];items.push({id:`bond_${pi}_${idx}`,name:`결속 · ${b.a} + ${b.b}${b.n>1?' ('+(idx+1)+'/'+b.n+')':''}`,combos:[b.a,b.b],rarity:'rare',weapon:null,bond:true});}
+ return items;}
+const POOL=seedPool();
+const allBondOptions=BONDS.map((b,i)=>({key:'b:'+i,text:`결속 · ${b.a} + ${b.b}${b.n>1?' (2종)':''}`,combos:[b.a,b.b]}));
+const allStartOptions=[...SYNERGIES.map(s=>({key:'s:'+s.name,text:s.name,combos:[s.name]})),...allBondOptions];
+const lookupStart=new Map(allStartOptions.map(o=>[o.key,o]));
+const keyForCombo=name=>'s:'+name;
+function startsCount(){let counts=Object.fromEntries(SYNERGIES.map(s=>[s.name,Math.max(0,Math.floor(Number(state.extras[s.name]||0)))]));for(let key of state.starts){let o=lookupStart.get(key);if(o)for(let c of o.combos)counts[c]++}return counts;}
+function usedSlots(){return sum(state.fruits.map(f=>f.qty))+(state.carrot?1:0)}
+function countFruit(combo,sign,exclude=-1){return sum(state.fruits.filter((f,i)=>i!==exclude&&f.combo===combo&&f.sign===sign).map(x=>x.qty))}
+function capFor(sign){return sign===1?3:2}
+function canChangeQty(i,amt){let f=state.fruits[i],next=f.qty+amt;if(next<1)return false;if(next+countFruit(f.combo,f.sign,i)>capFor(f.sign))return false;if(usedSlots()+amt>6)return false;return true}
+function status(msg,warning=false){$('status').textContent=msg;$('status').className='caption '+(warning?'warn':'textok')}
+function showFruitError(msg){$('fruitError').textContent=msg||''}
+function selectOpts(selected){return SYNERGIES.map(s=>`<option value="${xss(s.name)}" ${s.name===selected?'selected':''}>${xss(s.name)}</option>`).join('')}
+function renderFruit(){
+ $('slotCount').textContent=usedSlots()+' / 6칸';$('addFruit').disabled=usedSlots()>=6;
+ $('carrot').checked=state.carrot;
+ $('fruitRows').innerHTML=state.fruits.length?state.fruits.map((f,i)=>`<div class="fruitrow"><span class="index">${i+1}</span><select aria-label="${i+1}번 과일 시너지" data-fruit="${i}" data-kind="combo">${selectOpts(f.combo)}</select><select aria-label="${i+1}번 과일 종류" data-fruit="${i}" data-kind="sign"><option value="1" ${f.sign===1?'selected':''}>일반 +</option><option value="-1" ${f.sign===-1?'selected':''}>얼린 −</option></select><div class="stepper"><button type="button" data-action="minus" data-index="${i}" ${canChangeQty(i,-1)?'':'disabled'} aria-label="과일 수량 줄이기">−</button><output>${f.qty}</output><button type="button" data-action="plus" data-index="${i}" ${canChangeQty(i,1)?'':'disabled'} aria-label="과일 수량 늘리기">+</button></div><button class="rem" type="button" aria-label="과일 삭제" data-action="remove" data-index="${i}">×</button></div>`).join(''):'<div class="empty">과일이 등록되지 않았어. 아래에서 추가할 수 있어.</div>';
+}
+function renderStart(){let options='<option value="">시너지 또는 결속 선택</option>'+allStartOptions.map(o=>`<option value="${xss(o.key)}">${xss(o.text)}</option>`).join('');$('startRows').innerHTML=state.starts.length?state.starts.map((s,i)=>`<div class="startrow"><select aria-label="시작 아이템 ${i+1}" data-start="${i}">${options.replace('value="'+xss(s)+'"','value="'+xss(s)+'" selected')}</select><button class="rem" type="button" aria-label="시작 아이템 삭제" data-start-remove="${i}">×</button></div>`).join(''):'<div class="empty">선택한 시작 아이템이 없어.</div>';
+ $('startCount').textContent=state.starts.length+' / 2개';$('addStart').disabled=state.starts.length>=2;
+}
+function renderExtras(){let cc=startsCount();$('extraSynergy').innerHTML=SYNERGIES.map(s=>`<label class="control"><span class="slabel">${xss(s.name)} <span class="muted">(총 ${cc[s.name]})</span></span><input min="0" max="50" type="number" value="${Math.max(0,Math.floor(state.extras[s.name]||0))}" data-extra="${xss(s.name)}"></label>`).join('')}
+function renderWeapon(){let buttons=WPN.map(([key,name])=>`<button type="button" data-weapon="${key}" class="weap ${state.weapon===key?'active':''}" aria-pressed="${state.weapon===key}"><b>${name}</b><small>${key}</small></button>`).join('');$('weaponButtons').innerHTML=buttons;
+ let eligible=POOL.filter(x=>!x.weapon||x.weapon===state.weapon);let excluded=POOL.length-eligible.length;
+ $('weaponImpact').textContent=`선택 무기 전용 조건 반영: 전체 ${POOL.length}개 중 ${excluded}개 제외 · 조건상 ${eligible.length}개 후보`}
+function renderWeightControls(){$('rarityWeights').innerHTML=RARITIES.map(([k,n])=>`<div class="control"><label for="weight_${k}">${n}</label><input type="number" id="weight_${k}" data-weight="${k}" value="${state.rarityWeights[k]}" min="0" step="0.25"></div>`).join('')}
+function rarityName(k){let r=RARITIES.find(a=>a[0]===k);return r?r[1]:'—'}
+function calcModifier(combo,counts){let plus=countFruit(combo,1),minus=countFruit(combo,-1);let fruit=50*(plus-minus);let adaptive=state.carrot&&minus===0?25*Math.min(3,counts[combo]||0):0;return {fruit,adaptive,total:fruit+adaptive,minus}}
+function eligibleBond(item,counts){if(!item.bond)return true;if(!state.includeBonds)return false;if(state.bondRule==='all')return true;if(state.bondRule==='both')return item.combos.every(c=>counts[c]>0);return item.combos.some(c=>counts[c]>0)}
+// 사용자가 제공한 희귀도 표 이미지(기준 행운 -50, 0, 100)를 퍼센트로 기록.
+// 순서: [행운 -50의 최소값, 행운 0의 기본값, 행운 100의 최대값].
+const REWARD_TABLE={
+ normal:{advanced:[33,43,55],rare:[2,8,18],legend:[0,0.5,3]},
+ mini:{advanced:[17,52,30],rare:[8,27,53],legend:[1.5,3,10]},
+ boss:{advanced:[21,48,30],rare:[10,28,56],legend:[2,7,13]}
+};
+const MODE_LABELS={normal:'일반·석판 보상',mini:'미니보스 보상',boss:'보스 보상'};
+function activeProfile(){return REWARD_TABLE[state.rewardType]}
+function rewardDistribution(){
+ if(state.luck===null||state.luck===undefined||state.luck===''||!Number.isFinite(Number(state.luck)))return null;
+ let luck=Math.min(100,Math.max(-50,Number(state.luck)));
+ let p=activeProfile(),out={};
+ for(let key of ['advanced','rare','legend']){
+  let [minimum,base,maximum]=p[key];
+  let value=luck<0? minimum+(base-minimum)*(luck+50)/50:base+(maximum-base)*luck/100;
+  out[key]=value/100;
+ }
+ out.common=1-out.advanced-out.rare-out.legend;
+ if(out.common< -0.0000001)return null;
+ out.common=Math.max(0,out.common);
+ return out;
+}
+function numericReady(){return state.rarity!=='all'||rewardDistribution()!==null}
+function itemProbabilities(out){
+  let probs=rewardDistribution(),byRarity={};for(let [k] of RARITIES)byRarity[k]=sum(out.filter(it=>it.rarity===k).map(it=>it.weight));
+  return out.map(it=>{
+    let p=0;
+    if(state.rarity!=='all')p=byRarity[it.rarity]>0?it.weight/byRarity[it.rarity]:0;
+    else if(probs){
+      let available=sum(RARITIES.filter(([key])=>byRarity[key]>0).map(([key])=>probs[key]));
+      p=byRarity[it.rarity]>0&&available>0?probs[it.rarity]/available*it.weight/byRarity[it.rarity]:0;
+    }
+    return {...it,share:p*100};
+  });
+}
+function renderRewardControls(){
+ $('rewardModeTag').textContent=MODE_LABELS[state.rewardType];
+ $('luck').value=state.luck===null?'':state.luck;
+ for(let b of $('rewardModeButtons').querySelectorAll('[data-mode]')){
+  let active=b.dataset.mode===state.rewardType;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));
+ }
+ let p=activeProfile();
+ let headers='<thead><tr><th>등급</th><th>행운 −50</th><th>행운 0</th><th>행운 100</th></tr></thead>';
+ let rows=[['advanced','고급'],['rare','희귀'],['legend','전설']].map(([key,label])=>`<tr><td>${label}</td>${p[key].map(v=>`<td>${pct(v,2)}</td>`).join('')}</tr>`).join('');
+ let common=[0,1,2].map(i=>100-p.advanced[i]-p.rare[i]-p.legend[i]);
+ $('rewardProfileInputs').innerHTML=`<table class="datatable">${headers}<tbody><tr><td>일반</td>${common.map(v=>`<td>${pct(v,2)}</td>`).join('')}</tr>${rows}</tbody></table>`;
+ renderProbabilitySummary();
+}
+function renderProbabilitySummary(){
+ let dist=rewardDistribution();
+ $('probSummary').innerHTML=RARITIES.map(([key,label])=>`<div class="probTile"><small>${label}</small><b class="${key==='legend'?'warn':''}">${dist?pct(dist[key]*100,2):'—'}</b></div>`).join('');
+ let hasLuck=state.luck!==null&&state.luck!==undefined&&state.luck!==''&&Number.isFinite(Number(state.luck));
+ let applied=hasLuck?Math.min(100,Math.max(-50,Number(state.luck))):null;
+ $('probSource').textContent=!hasLuck?'내 행운 스탯을 입력하면 이 자리에 등급별 확률이 표시됩니다.':`입력한 행운: ${state.luck} · 계산 적용값: ${applied} · ${MODE_LABELS[state.rewardType]} · 사용자 제공 확률표 기준 (비공식)`;
+ $('probSource').className='probBadge '+(dist?'textok':'probSource');
+}
+function makeScored(){let counts=startsCount();let mods=Object.fromEntries(SYNERGIES.map(s=>[s.name,calcModifier(s.name,counts)]));let out=[];
+ for(let it of POOL){if(it.weapon&&it.weapon!==state.weapon)continue;if(state.rarity!=='all'&&state.rarity!==it.rarity)continue;if(!eligibleBond(it,counts))continue;
+ let f=it.combos.map(c=>mods[c].total);
+ let comboMod=f[0]||0;
+ if(it.bond){if(state.bondFormula==='sum')comboMod=sum(f);else if(state.bondFormula==='max')comboMod=Math.max(...f);else comboMod=sum(f)/f.length;
+ // 결속 고유 보정은 게임의 풀 구성식을 모르는 상태에서 +25%p 또는 +50%p로 근사
+ comboMod+=state.carrot&&it.combos.every(c=>mods[c].minus===0)?50:25;
+ }
+ let weight=Math.max(0,1+comboMod/100)*Math.max(0,state.rarityWeights[it.rarity]??1);
+ if(weight>0)out.push({...it,weight,comboMod});
+ }
+ return {out,counts,mods,total:sum(out.map(x=>x.weight))};
+}
+function calcShares(out){return SYNERGIES.map(s=>{let subset=out.filter(x=>x.combos.includes(s.name));return {name:s.name,num:subset.length,score:sum(subset.map(x=>x.share)),share:sum(subset.map(x=>x.share))}}).sort((a,b)=>b.share-a.share)}
+function defaultTable(){let bondCounts=Object.fromEntries(SYNERGIES.map(s=>[s.name,0]));for(let b of BONDS){bondCounts[b.a]+=b.n;bondCounts[b.b]+=b.n}
+ $('dataRows').innerHTML=SYNERGIES.map(s=>`<tr><td>${xss(s.name)}</td>${s.c.map(n=>`<td class="num">${n}</td>`).join('')}<td class="num">+${bondCounts[s.name]}</td></tr>`).join('');$('dataSizeTag').textContent=`26 시너지 · ${BONDS.length} 결속 조합`;
+}
+function updateResults(){
+  renderProbabilitySummary();
+  let d=makeScored();scored=itemProbabilities(d.out);simHits=null;synergyShares=calcShares(scored);
+  let ready=numericReady();
+  $('candidateCount').textContent=moneyNum(scored.length);$('bondCount').textContent=moneyNum(scored.filter(x=>x.bond).length);
+  $('mostCombo').textContent=ready&&synergyShares[0]?.score>0?synergyShares[0].name:'—';
+  $('strongestShare').textContent=ready&&synergyShares[0]?.score>0?pct(synergyShares[0].share):'—';
+  $('modelTag').textContent=state.rarity==='all'?(ready?MODE_LABELS[state.rewardType]+' · 행운 '+state.luck:'행운 입력 필요'):rarityName(state.rarity)+' 조건부 분포';
+  let perRarity=Object.fromEntries(RARITIES.map(x=>[x[0],scored.filter(it=>it.rarity===x[0]).length]));
+  let probs=rewardDistribution();
+  $('raritySummary').innerHTML=RARITIES.map(([k,n])=>`<span class="statpill"><span class="rarbadge ${k}">${n}</span> ${perRarity[k]}개${probs&&state.rarity==='all'?' · '+pct(probs[k]*100,1):''}</span>`).join('');
+  let counts=d.counts;let active=Object.entries(counts).filter(([_,v])=>v>0).sort((a,b)=>b[1]-a[1]);
+  $('summaryMsg').textContent=`시작·보유 시너지: ${active.length?active.map(([n,c])=>n+' '+c).join(' · '):'없음'} | 꼬치 ${usedSlots()}/6칸 | 결속 후보 ${scored.filter(x=>x.bond).length}개.`+(ready?'':' 행운을 입력해야 종합 확률을 계산할 수 있습니다. 등급을 한 가지 지정한 조건부 분석은 별도입니다.');
+  $('synergyChart').innerHTML=ready?synergyShares.map(s=>`<div class="chartrow"><label title="해당 시너지 활성 후보 ${s.num}개">${xss(s.name)}</label><div class="track"><div class="bar" style="width:${Math.min(100,s.share).toFixed(2)}%"></div></div><div class="pct">${pct(s.share)}</div></div>`).join(''):'<div class="empty">위에서 행운을 직접 입력하면 비중이 계산됩니다.</div>';
+  $('rankingTag').textContent='첫 선택지 기준';$('rankHeader').textContent='모델상 비중';
+  $('rankingHint').textContent=ready?(state.rarity==='all'?'희귀도 먼저 뽑고, 그 등급의 후보 중 가중 추첨한 1개 선택지 기준입니다.':'선택한 등급이 이미 결정됐다고 가정하는 조건부 확률입니다.'):'행운을 입력해야 전체 확률을 계산할 수 있습니다.';
+  if(ready)renderRanking(scored.slice().sort((a,b)=>b.share-a.share).slice(0,100),'share');
+  else $('rankingRows').innerHTML='<tr><td colspan="4">행운을 입력해 주세요</td></tr>';
+  $('drawSample').disabled=!ready;$('runMonteCarlo').disabled=!ready;
+  $('sampleKind').textContent=state.choices+'개 선택지';
+  $('simStatus').textContent=ready?'설정 변경됨. 「보상 다시 뽑기」 또는 「반복 추첨」을 누르세요.':'내 행운 스탯을 입력해야 추첨할 수 있습니다.';
+  if(ready)drawSample(false);else renderSamples([]);
+}
+function renderRanking(rows,field){$('rankingRows').innerHTML=rows.length?rows.map(it=>`<tr><td>${xss(it.name)}${it.weapon?' <span class="muted mini">('+xss(WPN.find(w=>w[0]===it.weapon)[1])+' 전용)</span>':''}</td><td>${xss(it.combos.join(' + '))}</td><td><span class="rarbadge ${it.rarity}">${rarityName(it.rarity)}</span>${it.bond?' <span class="rarbadge" style="color:var(--purple)">결속</span>':''}</td><td class="num">${pct(it[field])}</td></tr>`).join(''):'<tr><td colspan="4">조건에 맞는 후보가 없습니다. 결속 조건·희귀도·가중치를 확인하세요.</td></tr>'}
+function pickWeighted(pool,random=Math.random){
+  let total=sum(pool.map(x=>x.weight));if(total<=0)return null;
+  let r=random()*total;for(let i=0;i<pool.length;i++){r-=pool[i].weight;if(r<0)return {idx:i,item:pool[i]}}return {idx:pool.length-1,item:pool[pool.length-1]};
+}
+function pickOne(pool,random=Math.random){
+  if(!pool.length||!numericReady())return null;
+  if(state.rarity!=='all')return pickWeighted(pool,random);
+  let dist=rewardDistribution();if(!dist)return null;
+  let groups=RARITIES.map(([k])=>({rarity:k,weight:pool.some(it=>it.rarity===k&&it.weight>0)?dist[k]:0})).filter(x=>x.weight>0);
+  if(!groups.length)return null;
+  let total=sum(groups.map(x=>x.weight)),r=random()*total,picked=groups[groups.length-1].rarity;
+  for(let g of groups){r-=g.weight;if(r<0){picked=g.rarity;break}}
+  let inGrade=pool.map((item,idx)=>({item,idx})).filter(x=>x.item.rarity===picked&&x.item.weight>0);
+  let res=pickWeighted(inGrade.map(x=>x.item),random);
+  return res?{idx:inGrade[res.idx].idx,item:res.item}:null;
+}
+function drawUnique(pool,n,random=Math.random){let list=pool.slice(),picks=[];for(let i=0;i<n&&list.length;i++){let one=pickOne(list,random);if(!one)break;picks.push(one.item);list.splice(one.idx,1)}return picks}
+function renderSamples(items){$('sampleCards').innerHTML=items.length?items.map((it,i)=>`<div class="sample ${it.bond?'bond':''}"><div class="index">보상 ${i+1} ${it.bond?'· 결속':''}</div><span class="rarbadge ${it.rarity}">${rarityName(it.rarity)}</span><div class="name">${xss(it.name)}</div><div class="tiny">${xss(it.combos.join(' + '))}${it.weapon?' · '+xss(WPN.find(w=>w[0]===it.weapon)[1])+' 전용':''}</div></div>`).join(''):'<div class="empty">현재 계산 조건에 맞는 아이템이 없습니다.</div>'}
+function drawSample(updateMsg=true){let selected=drawUnique(scored,state.choices);renderSamples(selected);if(updateMsg)$('simStatus').textContent=`${new Date().toLocaleTimeString('ko-KR')}에 가상 선택지 ${selected.length}개를 다시 생성했어. 실제 게임 결과를 보장하지 않아.`}
+function runSimulation(){let n=state.runs,N=state.choices;if(scored.length===0||!numericReady()){$('simStatus').textContent='후보가 없어서 추첨할 수 없어.';return}
+ $('simStatus').textContent=`${moneyNum(n)}회 가상 추첨 계산 중...`;
+ // 브라우저 렌더링 후 계산을 시작해 UI 반응성을 유지
+ setTimeout(()=>{let hits=Object.create(null),comboHits=Object.fromEntries(SYNERGIES.map(s=>[s.name,0]));for(let t=0;t<n;t++){let chosen=drawUnique(scored,N);let combos=new Set();for(let it of chosen){hits[it.id]=(hits[it.id]||0)+1;for(let s of it.combos)combos.add(s)}for(let s of combos)comboHits[s]++}
+ simHits=hits;let rows=scored.map(it=>({...it,hitPct:100*(hits[it.id]||0)/n})).sort((a,b)=>b.hitPct-a.hitPct);renderRanking(rows.slice(0,100),'hitPct');$('rankingTag').textContent=moneyNum(n)+'회';$('rankHeader').textContent='선택지 등장 빈도';$('rankingHint').textContent=`${moneyNum(n)}번의 독립적인 가상 보상(${N}지선다)에서 해당 아티팩트가 한 번 이상 포함된 비율입니다. 실제 확률이 아닙니다.`;
+ $('simStatus').textContent=`가상 보상 ${moneyNum(n)}회, 각 ${N}지선다 계산 완료 · 1위 시너지 포함 보상 비율: ${synergyShares[0]?.name||'없음'} ${pct(100*(comboHits[synergyShares[0]?.name]||0)/n)} (결속 중복 포함)`;
+ },30);
+}
+function update(){renderRewardControls();renderFruit();renderStart();renderWeapon();renderExtras();updateResults()}
+function changeConfig(){updateResults()}
+function reset(){state={rewardType:'normal',luck:null,weapon:'sword',fruits:[],carrot:false,starts:[],extras:{},rarity:'all',choices:3,includeBonds:true,bondRule:'one',bondFormula:'average',rarityWeights:{common:1,advanced:1,rare:1,legend:1},runs:5000};syncControls();update();status('기본값으로 초기화했어.')}
+function syncControls(){renderRewardControls();$('rarity').value=state.rarity;$('choices').value=state.choices;$('includeBonds').checked=state.includeBonds;$('bondRule').value=state.bondRule;$('bondFormula').value=state.bondFormula;$('runs').value=state.runs;renderWeightControls()}
+function normalizedState(s){if(!s||typeof s!=='object')throw Error('올바른 설정이 아니야.');let o={...state,...s};let valid=new Set(SYNERGIES.map(s=>s.name));if(!WPN.some(w=>w[0]===o.weapon))o.weapon='sword';o.rewardType=['normal','mini','boss'].includes(s.rewardType)?s.rewardType:'normal';o.luck=(s.luck===null||s.luck===undefined||s.luck===''||!Number.isFinite(Number(s.luck)))?null:Number(s.luck);o.fruits=[];let used=0;for(let f of Array.isArray(s.fruits)?s.fruits:[]){let sign=Number(f.sign)===-1?-1:1,combo=String(f.combo),qty=Math.floor(clamp(f.qty,1,3));if(!valid.has(combo))continue;let same=sum(o.fruits.filter(x=>x.combo===combo&&x.sign===sign).map(x=>x.qty));let safeQty=Math.min(qty,sign===1?3-same:2-same,6-used);if(safeQty>0){o.fruits.push({combo,sign,qty:safeQty});used+=safeQty}}o.carrot=Boolean(s.carrot)&&used<6;o.starts=Array.isArray(s.starts)?s.starts.filter(x=>lookupStart.has(x)).slice(0,2):[];o.extras={};for(let synergy of SYNERGIES)o.extras[synergy.name]=Math.floor(clamp(s.extras?.[synergy.name]||0,0,50));o.rarity=['all',...RARITIES.map(x=>x[0])].includes(s.rarity)?s.rarity:'all';o.choices=Math.floor(clamp(s.choices||3,1,8));o.includeBonds=s.includeBonds!==false;o.bondRule=['one','both','all'].includes(s.bondRule)?s.bondRule:'one';o.bondFormula=['average','sum','max'].includes(s.bondFormula)?s.bondFormula:'average';o.rarityWeights={};for(let [key] of RARITIES)o.rarityWeights[key]=clamp(s.rarityWeights?.[key]??1,0,1000);o.runs=[1000,5000,20000].includes(Number(s.runs))?Number(s.runs):5000;return o}
+function getCSV(){let lines=['id,name,rarity,synergies,bond,weapon_only'];for(let it of POOL){let cols=[it.id,it.name,rarityName(it.rarity),it.combos.join(' + '),it.bond?'Y':'N',it.weapon?WPN.find(w=>w[0]===it.weapon)[1]:''];lines.push(cols.map(c=>'"'+String(c).replaceAll('"','""')+'"').join(','))}return '\uFEFF'+lines.join('\r\n')}
+function download(filename,data,type){let url=URL.createObjectURL(new Blob([data],{type})),link=document.createElement('a');link.href=url;link.download=filename;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+function on(event,container,selector,handler){container.addEventListener(event,e=>{let target=e.target.closest(selector);if(target&&container.contains(target))handler(target,e)})}
+$('rewardModeButtons').addEventListener('click',e=>{let b=e.target.closest('[data-mode]');if(!b)return;state.rewardType=b.dataset.mode;renderRewardControls();changeConfig()});
+$('luck').addEventListener('input',e=>{let raw=e.target.value.trim();state.luck=raw===''?null:(Number.isFinite(Number(raw))?Number(raw):null);changeConfig()});
+$('weaponButtons').addEventListener('click',e=>{let b=e.target.closest('[data-weapon]');if(!b)return;state.weapon=b.dataset.weapon;renderWeapon();changeConfig()});
+on('click',$('fruitRows'),'button[data-action]',b=>{let i=Number(b.dataset.index),f=state.fruits[i];if(!f)return;let a=b.dataset.action;if(a==='remove'){state.fruits.splice(i,1)}else if(a==='plus'&&canChangeQty(i,1)){f.qty++}else if(a==='minus'&&canChangeQty(i,-1)){f.qty--}else return;showFruitError('');renderFruit();changeConfig()});
+on('change',$('fruitRows'),'select[data-kind]',el=>{let i=Number(el.dataset.fruit),f=state.fruits[i],combo=el.dataset.kind==='combo'?el.value:f.combo,sign=el.dataset.kind==='sign'?Number(el.value):f.sign;
+ let cap=capFor(sign)-countFruit(combo,sign,i);if(cap<1){showFruitError('같은 시너지·종류는 개수 제한을 초과할 수 없어.');renderFruit();return}f.combo=combo;f.sign=sign;f.qty=Math.min(f.qty,cap);showFruitError('');renderFruit();changeConfig()});
+$('addFruit').onclick=()=>{if(usedSlots()>=6){showFruitError('당근을 포함해 최대 6칸이야.');return}let defaultCombo=SYNERGIES.find(s=>countFruit(s.name,1)<3);if(!defaultCombo){showFruitError('등록 가능한 시너지가 없어.');return}state.fruits.push({combo:defaultCombo.name,sign:1,qty:1});showFruitError('');renderFruit();changeConfig()};
+$('clearFruit').onclick=()=>{state.fruits=[];renderFruit();changeConfig();showFruitError('')};
+$('carrot').onchange=e=>{if(e.target.checked&&usedSlots()>=6){e.target.checked=false;showFruitError('당근도 한 칸을 차지해. 과일을 하나 줄여줘.');return}state.carrot=e.target.checked;showFruitError('');renderFruit();changeConfig()};
+$('addStart').onclick=()=>{if(state.starts.length>=2)return;state.starts.push('');renderStart();changeConfig()};
+$('clearStart').onclick=()=>{state.starts=[];renderStart();changeConfig()};
+on('change',$('startRows'),'select[data-start]',el=>{state.starts[Number(el.dataset.start)]=el.value;renderExtras();changeConfig()});
+on('click',$('startRows'),'button[data-start-remove]',el=>{state.starts.splice(Number(el.dataset.startRemove),1);renderStart();renderExtras();changeConfig()});
+on('change',$('extraSynergy'),'input[data-extra]',el=>{state.extras[el.dataset.extra]=Math.floor(clamp(el.value,0,50));renderExtras();changeConfig()});
+$('resetExtra').onclick=()=>{state.extras={};renderExtras();changeConfig()};
+$('rarity').onchange=e=>{state.rarity=e.target.value;changeConfig()};
+$('choices').onchange=e=>{state.choices=Math.floor(clamp(e.target.value,1,8));e.target.value=state.choices;changeConfig()};
+$('includeBonds').onchange=e=>{state.includeBonds=e.target.checked;changeConfig()};
+$('bondRule').onchange=e=>{state.bondRule=e.target.value;changeConfig()};
+$('bondFormula').onchange=e=>{state.bondFormula=e.target.value;changeConfig()};
+on('change',$('rarityWeights'),'input[data-weight]',el=>{let v=clamp(el.value,0,1000);state.rarityWeights[el.dataset.weight]=v;el.value=v;changeConfig()});
+$('runs').onchange=e=>state.runs=Number(e.target.value);
+$('drawSample').onclick=()=>drawSample();$('runMonteCarlo').onclick=runSimulation;$('recompute').onclick=updateResults;
+$('resetAll').onclick=()=>{if(confirm('설정 전체를 기본값으로 초기화할까?'))reset()};
+$('save').onclick=()=>{try{localStorage.setItem(STATE_KEY,JSON.stringify(state));status('이 브라우저에 설정을 저장했어.')}catch(e){status('저장 실패: '+e.message,true)}};
+$('load').onclick=()=>{try{let s=localStorage.getItem(STATE_KEY)||localStorage.getItem('sephiria_stars_ko_v4_config');if(!s)throw Error('저장한 설정이 없어.');state=normalizedState(JSON.parse(s));syncControls();update();status('저장된 설정을 불러왔어.')}catch(e){status('불러오기 실패: '+e.message,true)}};
+$('exportSettings').onclick=()=>download('sephiria_stars_v6_settings.json',JSON.stringify(state,null,2),'application/json');
+$('importSettings').onclick=()=>$('importSettingsInput').click();$('importSettingsInput').onchange=async e=>{let file=e.target.files?.[0];if(!file)return;try{state=normalizedState(JSON.parse(await file.text()));syncControls();update();status('설정 파일을 불러왔어.')}catch(err){status('파일 읽기 실패: '+err.message,true)}e.target.value=''};
+$('downloadCSV').onclick=()=>download('sephiria_stars_v6_artifact_pool.csv',getCSV(),'text/csv;charset=utf-8');
+if(POOL.length!==318||BONDS.length!==40||SYNERGIES.length!==26)throw Error('등록된 보상 데이터 검증에 실패했습니다.');
+defaultTable();syncControls();update();
+</script></body></html>
